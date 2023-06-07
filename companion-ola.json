@@ -1,0 +1,290 @@
+[
+    {
+        "id": "4dc0da8c26f80c15",
+        "type": "tab",
+        "label": "Stream Deck - Companion",
+        "disabled": false,
+        "info": " Copyright (C) 2023 Johan Nilsson\r\n https://gobo.ws",
+        "env": []
+    },
+    {
+        "id": "62c10147df4e9ee1",
+        "type": "inject",
+        "z": "4dc0da8c26f80c15",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 180,
+        "wires": [
+            [
+                "d7a1f782dffd97c2"
+            ]
+        ]
+    },
+    {
+        "id": "e95c6faa.ab2e1",
+        "type": "http request",
+        "z": "4dc0da8c26f80c15",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:8000/style/bank/1/9?text={{{uptime}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 830,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b001d489.d8f818",
+        "type": "change",
+        "z": "4dc0da8c26f80c15",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "uptime",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 180,
+        "wires": [
+            [
+                "e95c6faa.ab2e1"
+            ]
+        ]
+    },
+    {
+        "id": "d7a1f782dffd97c2",
+        "type": "http request",
+        "z": "4dc0da8c26f80c15",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:9090/json/server_stats",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 180,
+        "wires": [
+            [
+                "29f39b728776942e"
+            ]
+        ]
+    },
+    {
+        "id": "29f39b728776942e",
+        "type": "template",
+        "z": "4dc0da8c26f80c15",
+        "name": "Uptime",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload.instance_name}} Up since: {{payload.up_since}}",
+        "output": "str",
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "b001d489.d8f818"
+            ]
+        ]
+    },
+    {
+        "id": "bcc7b406e55d9a56",
+        "type": "inject",
+        "z": "4dc0da8c26f80c15",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 340,
+        "wires": [
+            [
+                "663dc52fcaf33e89"
+            ]
+        ]
+    },
+    {
+        "id": "3fd8c325967a3833",
+        "type": "http request",
+        "z": "4dc0da8c26f80c15",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://elise-rpi:8000/style/bank/1/9?bgcolor={{{payload}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 990,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "663dc52fcaf33e89",
+        "type": "http request",
+        "z": "4dc0da8c26f80c15",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://elise-rpi:9090/get_dmx?u=1",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 340,
+        "wires": [
+            [
+                "4e041ea7fbc59207"
+            ]
+        ]
+    },
+    {
+        "id": "4e041ea7fbc59207",
+        "type": "function",
+        "z": "4dc0da8c26f80c15",
+        "name": "DMX values",
+        "func": "msg.payload.r = msg.payload.dmx[0];\nmsg.payload.g = msg.payload.dmx[1];\nmsg.payload.b = msg.payload.dmx[2];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 340,
+        "wires": [
+            [
+                "0c836b201a9b1006"
+            ]
+        ]
+    },
+    {
+        "id": "0c836b201a9b1006",
+        "type": "color-convert",
+        "z": "4dc0da8c26f80c15",
+        "input": "rgb",
+        "output": "hex",
+        "outputType": "string",
+        "scaleInput": false,
+        "x": 670,
+        "y": 340,
+        "wires": [
+            [
+                "b7764f4d5df6d4e8"
+            ]
+        ]
+    },
+    {
+        "id": "b7764f4d5df6d4e8",
+        "type": "change",
+        "z": "4dc0da8c26f80c15",
+        "name": "Remove #",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "#",
+                "fromt": "str",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 340,
+        "wires": [
+            [
+                "3fd8c325967a3833"
+            ]
+        ]
+    },
+    {
+        "id": "9573b644b7cb60ac",
+        "type": "comment",
+        "z": "4dc0da8c26f80c15",
+        "name": "Get OLA instance name & uptime and display it on a Stream Deck button",
+        "info": "",
+        "x": 380,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "556a4e99dafb7a99",
+        "type": "comment",
+        "z": "4dc0da8c26f80c15",
+        "name": "Change Stream Deck button background color depending on DMX value (RGB) from OLA",
+        "info": "",
+        "x": 430,
+        "y": 280,
+        "wires": []
+    }
+]
