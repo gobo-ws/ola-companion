@@ -15,4 +15,5 @@ To stop an OLA recorder playback from running, use the same press action "intern
 In the field "Path (supports variables in path)" just enter: `pkill -f "ola_recorder --playback /home/username/yourfile --iterations 0 --universes 1"`
   
   
-It would probably generate some errors in the log file, displaying messages like '`Shell command failed. Guru meditation: {"code":null'` – I don't know why yet, but it works, though.
+It would probably generate some errors in the log file, displaying messages like '`Shell command failed. Guru meditation: {"code":null'`  
+– I don't know why yet, but it works, though.
