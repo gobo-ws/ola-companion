@@ -16,4 +16,6 @@ In the field "Path (supports variables in path)" just enter: `pkill -f "ola_reco
   
   
 It would probably generate some errors in the log file, displaying messages like '`Shell command failed. Guru meditation: {"code":null'`  
-– I don't know why yet, but it works, though.
+– I don't know why yet, but it works, though.  
+  
+  /Johan
