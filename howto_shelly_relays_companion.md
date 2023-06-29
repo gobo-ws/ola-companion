@@ -24,7 +24,7 @@ Add a new button with the press action: http POST
 URL:  
 `http://$(internal:custom_Shelly_hostname)/rpc/Switch.Set`  
   
-Body:
+Body:  
 `{"id":0, "on":false}`  
   
 Content Type:  
